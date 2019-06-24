@@ -31,8 +31,8 @@ def create_db():
       city_id integer(10) NOT NULL,
       city_name char(128) NOT NULL,
       data char(128) NOT NULL,
-      temp float(128) NOT NULL,
-      weather_id integer(10) NOT NULL
+      weather_id integer(10) NOT NULL,
+      temp float(128) NOT NULL
     );"""
     cursor.execute(create_script)
 

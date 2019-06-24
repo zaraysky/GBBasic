@@ -1,30 +1,24 @@
+import json
+
 from abc import ABC, abstractmethod
 
 
 class Report(ABC):
-    def __init__(self):
-        self.data = []
-
     @abstractmethod
-    def generate_report(self):
+    def generate_report(self, data):
         raise NotImplementedError
-
-    def add_data(self, record):
-        self.data.append(record)
 
 
 class ReportCSV(Report):
-
-    def generate_report(self):
+    def generate_report(self, data):
         print('Report in CSV')
+        out = '\n'.join([','.join([str(item) for item in row]) for row in data])
+        return out
 
 
-csv = ReportCSV()
+class ReportJSON(Report):
+    def generate_report(self, data):
+        print('Report in JSON')
+        out = json.dumps(data)
+        return out
 
-class WeatherService:
-    def get_report(self, report_service: Report):
-        report_service.generate_report()
-
-
-ws = WeatherService()
-ws.get_report(csv)
