@@ -45,9 +45,7 @@ def create_db():
       lat float(128) NOT NULL,
       lon float(128) NOT NULL
     );"""
-
     cursor.execute(create_script)
-    return conn
 
 
 def get_city_list():
