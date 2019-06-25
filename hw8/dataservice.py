@@ -13,7 +13,11 @@ class DataSource(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def load_data(self, data):
+    def load_data(self, table):
+        raise NotImplementedError
+
+    @abstractmethod
+    def filter_data(self, table, field, condition):
         raise NotImplementedError
 
 
@@ -40,6 +44,21 @@ class SQLiteDataSource(DataSource):
             print(f'Ошибка записи')
 
         return res.fetchall()
+
+    def filter_data(self, table_name, field, condition):
+        if self.conn is None:
+            print("Соединение с базой не установлено")
+            return
+
+        res = None
+        try:
+            cursor = self.conn.cursor()
+            res = cursor.execute(f"SELECT * FROM {table_name} WHERE {field}='{condition}'")
+        except sqlite3.IntegrityError:
+            print(f'Ошибка записи')
+
+        return res.fetchall()
+
 
 
 if __name__ == '__main__':

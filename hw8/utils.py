@@ -12,7 +12,6 @@ API_ID = '718de002422859ab14b955ef4fae4757'
 
 def create_db():
     conn = sqlite3.connect("database.sqlite")  # или :memory: чтобы сохранить в RAM
-    # conn = sqlite3.connect(":memory:")  # или :memory: чтобы сохранить в RAM
     cursor = conn.cursor()
 
     # Создание таблицы
@@ -38,12 +37,12 @@ def create_db():
 
     return conn
 
+
 def get_city_list():
     city_file = os.path.join(os.getcwd(), 'city.json')
     if not os.path.isfile(city_file):
         req = requests.get('http://bulk.openweathermap.org/sample/city.list.json.gz')
         gzipped_content = req.content
-        print(gzipped_content[:10])
         decoded_content = gzip.decompress(gzipped_content).decode()
         with open(city_file, 'w') as f:
             f.write(decoded_content)
